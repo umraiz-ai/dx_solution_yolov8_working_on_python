@@ -38,14 +38,32 @@
         "sources":[
             {
                 "type":"image",
+                "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/0.jpg"
+            },
+            {
+                "type":"image",
                 "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/1.jpg"
+            },
+            {
+                "type":"image",
+                "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/2.jpg"
+            },
+            {
+                "type":"image",
+                "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/3.jpg"
+            },
+            {
+                "type":"image",
+                "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/4.jpg"
             }
         ]
     },
     "output": {
         "description": "output type is used for post processing, that yolo, ssd, etc...",
         "classes": [
-            "01","02","03","04","05","06","07","08","09","10","11","12","13","14"
+            "cement_truck", "compactor", "dump_truck", "excavator", "grader", 
+            "mobile_crane", "tower_crane", "Crane_Hook", "worker", "Hardhat", 
+            "Red_Hardhat", "scaffolds", "Lifted Load", "Hook"
         ],
         "type": "yolo"
     },
