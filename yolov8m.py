@@ -155,14 +155,45 @@ def run_example(config):
 
         x = np.squeeze(decoded_tensor)
         print(f"[DEBUG] Output shape after squeeze: {x.shape}")
-        x = x[x[..., 4]>score_threshold]
-        print(f"[DEBUG] Output shape after threshold: {x.shape}")
-        box = ops.xywh2xyxy(x[..., :4])
-        x[:,5:] *= x[:,4:5]
-        conf = np.max(x[..., 5:], axis=-1, keepdims=True)
-        j = np.argmax(x[..., 5:], axis=-1, keepdims=True)
-        mask = conf.flatten() > score_threshold
-        filtered = np.concatenate((box, conf, j.astype(np.float32)), axis=1)[mask]
+
+        decoding_method = config["model"]["param"].get("decoding_method", "yolo_basic")
+        print(f"[DEBUG] Decoding method: {decoding_method}")
+
+        # Handle transposition if channel-first (common in NPU output for YOLOv8)
+        # Only transpose if we have more columns than rows (heuristic for (C, N) vs (N, C))
+        # Anchors (N) is typically large (e.g. 8400), Channels (C) is small (e.g. 18 or 85)
+        if x.ndim == 2 and x.shape[0] < x.shape[1]:
+            print("[DEBUG] Transposing output tensor...")
+            x = x.transpose()
+            print(f"[DEBUG] Output shape after transpose: {x.shape}")
+
+        if decoding_method == "yolov8":
+             # YOLOv8 format: [x, y, w, h, class0, class1, ...]
+             # No objectness score layer
+             box = ops.xywh2xyxy(x[:, :4])
+             cls_scores = x[:, 4:]
+             
+             conf = np.max(cls_scores, axis=1, keepdims=True)
+             j = np.argmax(cls_scores, axis=1, keepdims=True)
+             
+             mask = conf.flatten() > score_threshold
+             filtered = np.concatenate((box, conf, j.astype(np.float32)), axis=1)[mask]
+
+        else:
+             # YOLOv5/Basic format: [x, y, w, h, obj, class0, class1, ...]
+             box = ops.xywh2xyxy(x[:, :4])
+             obj_conf = x[:, 4:5]
+             cls_scores = x[:, 5:]
+             
+             # Combined confidence
+             cls_scores = cls_scores * obj_conf
+             
+             conf = np.max(cls_scores, axis=1, keepdims=True)
+             j = np.argmax(cls_scores, axis=1, keepdims=True)
+             
+             mask = conf.flatten() > score_threshold
+             filtered = np.concatenate((box, conf, j.astype(np.float32)), axis=1)[mask]
+
         sorted_indices = np.argsort(-filtered[:, 4])
         x = filtered[sorted_indices]
         x = torch.Tensor(x)

@@ -1,0 +1,58 @@
+{
+    "description": "YOLOv8 Python demo config",
+    "usage": "detection",
+    "model": {
+        "path": "/home/orangepi/Desktop/umraiz/best_yolov8_M_6.dxnn",
+        "param": {
+            "name": "YoloV8N",
+            "input_width": 640,
+            "input_height": 640,
+            "score_threshold": 0.3,
+            "iou_threshold": 0.4,
+            "last_activation": "sigmoid",
+            "decoding_method": "yolov8",
+            "box_format": "center",
+            "final_outputs": [
+                "output0"
+            ],
+            "layer": [
+                {
+                    "name": "output0",
+                    "shape": [1, 18, 8400]
+                },
+                {
+                    "name": "/model.22/Sigmoid_output_0",
+                    "shape": [1, 14, 8400]
+                },
+                {
+                    "name": "/model.22/dfl/conv/Conv_output_0",
+                    "shape": [1, 1, 4, 8400]
+                }
+            ]
+        }
+    },
+    "input": {
+        "format": "RGB",
+        "sources": [
+            {"type": "image", "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/0.jpg"},
+            {"type": "image", "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/1.jpg"},
+            {"type": "image", "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/2.jpg"},
+            {"type": "image", "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/3.jpg"},
+            {"type": "image", "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/4.jpg"}
+        ]
+    },
+    "output": {
+        "description": "output type is used for post processing, that yolo, ssd, etc...",
+        "classes": [
+            "cement_truck", "compactor", "dump_truck", "excavator", "grader", 
+            "mobile_crane", "tower_crane", "Crane_Hook", "worker", "Hardhat", 
+            "Red_Hardhat", "scaffolds", "Lifted Load", "Hook"
+        ],
+        "type": "yolo"
+    },
+    "application": {
+        "description": "result of post-processing after inference, you can use 'save' or 'realtime' or 'none'",
+        "type": "save",
+        "resolution": [960, 540]
+    }
+}
