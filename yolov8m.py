@@ -207,6 +207,7 @@ def run_example(config):
             print("[{}] conf, classID, x1, y1, x2, y2, : {:.4f}, {}({}), {}, {}, {}, {}"
                   .format(idx, conf, classes[label], label, pt1[0], pt1[1], pt2[0], pt2[1]))
             image_src = cv2.rectangle(image_src, pt1, pt2, colors[label], 2)
+            cv2.putText(image_src, '{}: {:.3f}'.format(classes[label], conf), (pt1[0], pt1[1] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, colors[label], 2)
         out_path = os.path.join(output_dir, f"yolov5s_{count}.jpg")
         cv2.imwrite(out_path, image_src)
         print(f"[DEBUG] Saved file: {out_path}")
