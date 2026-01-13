@@ -1,0 +1,58 @@
+{
+    "description": "run yolo detector",
+    "usage": "detection",
+    "model": {
+        "path": "/home/orangepi/Desktop/umraiz/best_3.dxnn",
+        "param": {
+            "name": "yolov8__1",
+            "input_name": "images",
+            "input_size" : 640,
+            "score_threshold": 0.3,
+            "iou_threshold": 0.4,
+            "last_activation": "sigmoid",
+            "decoding_method": "yolov8",
+            "box_format": "center",
+            "layer": [
+                {
+                    "name": "/model.22/cv2.0/cv2.0.2/Conv",
+                    "stride": 8,
+                    "anchor_width": [],
+                    "anchor_height": []
+                },
+                {
+                    "name": "/model.22/cv2.1/cv2.1.2/Conv",
+                    "stride": 16,
+                    "anchor_width": [],
+                    "anchor_height": []
+                },
+                {
+                    "name": "/model.22/cv2.2/cv2.2.2/Conv",
+                    "stride": 32,
+                    "anchor_width": [],
+                    "anchor_height": []
+                }
+            ]
+        }
+    },
+    "input": {
+        "format": "BGR",
+        "sources": [
+            {
+                "type": "image",
+                "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/0.jpg"
+            }
+        ]
+    },
+    "output": {
+        "type": "yolo",
+        "classes": [
+            "cement_truck", "compactor", "dump_truck", "excavator", "grader", 
+            "mobile_crane", "tower_crane", "Crane_Hook", "worker", "Hardhat", 
+            "Red_Hardhat", "scaffolds", "Lifted Load", "Hook"
+        ]
+    },
+    "application": {
+        "type": "save",
+        "resolution": [960, 540]
+    }
+}

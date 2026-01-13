@@ -1,0 +1,22 @@
+{
+  "description": "YOLOv8 Custom Model - 14 Construction Equipment Classes",
+  "version": "1.0",
+  "default_loader": {
+    "dataset_path": "/home/orangepi/Desktop/umraiz/compiled_model/calibration_data",
+    "calibration_method": "kld",
+    "image_format": "RGB",
+    "image_size": [640, 640],
+    "batch_size": 1,
+    "normalization": {
+      "type": "standard",
+      "mean": [0.0, 0.0, 0.0],
+      "std": [255.0, 255.0, 255.0]
+    }
+  },
+  "compile_config": {
+    "target": "M1",
+    "quantize_type": "int8",
+    "optimization_level": 2,
+    "enable_profiling": false
+  }
+}

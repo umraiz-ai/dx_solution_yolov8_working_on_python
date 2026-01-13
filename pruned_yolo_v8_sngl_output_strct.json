@@ -1,0 +1,58 @@
+{
+    "description": "YOLOv8 Single Output Hybrid Inference",
+    "usage": "detection",
+    "model": {
+        "path": "/home/orangepi/Desktop/umraiz/best_yolov8_M.dxnn",
+        "param": {
+            "name": "yolov8_m",
+            "input_name": "images",
+            "input_size": 640,
+            "score_threshold": 0.3,
+            "iou_threshold": 0.4,
+            "last_activation": "sigmoid",
+            "decoding_method": "yolov8",
+            "box_format": "center",
+            "layer": [
+                {
+                    "name": "2",
+                    "stride": 8,
+                    "anchor_width": [],
+                    "anchor_height": []
+                },
+                {
+                    "name": "1",
+                    "stride": 16,
+                    "anchor_width": [],
+                    "anchor_height": []
+                },
+                {
+                    "name": "0",
+                    "stride": 32,
+                    "anchor_width": [],
+                    "anchor_height": []
+                }
+            ]
+        }
+    },
+    "input": {
+        "format": "RGB",
+        "sources": [
+            {
+                "type": "image",
+                "path": "/home/orangepi/Desktop/umraiz/test_samples_1classes/1.jpg"
+            }
+        ]
+    },
+    "output": {
+        "type": "yolo",
+        "classes": [
+            "cement_truck", "compactor", "dump_truck", "excavator", "grader", 
+            "mobile_crane", "tower_crane", "Crane_Hook", "worker", "Hardhat", 
+            "Red_Hardhat", "scaffolds", "Lifted Load", "Hook"
+        ]
+    },
+    "application": {
+        "type": "save",
+        "resolution": [960, 540]
+    }
+}
