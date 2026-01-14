@@ -12,4 +12,4 @@ python3 -Xfaulthandler /home/orangepi/dx-all-suite/dx-runtime/dx_app/templates/p
 Modified for yolov8
 python3 -Xfaulthandler ./yolov8m.py --config /home/orangepi/Desktop/umraiz/dx_Jan6_yolov8.json --output_dir /home/orangepi/Desktop/umraiz/output_images_yolov5/
 
-
+python3 ./yolov8m.py --config /home/orangepi/Desktop/umraiz/yolov8_rtsp.json --output_dir /home/orangepi/Desktop/umraiz/output_images_yolov5/
