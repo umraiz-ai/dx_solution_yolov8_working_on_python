@@ -320,9 +320,16 @@ def run_example(config):
                 out_path = os.path.join(output_dir, f"yolov5s_{count}.jpg")
                 cv2.imwrite(out_path, image_src)
 
+            # Display the frame live
+            cv2.imshow("YOLOv8 Inference", image_src)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                print("[DEBUG] 'q' pressed, stopping.")
+                break
+
             #print(f"[DEBUG] Saved file: {out_path}")
             count += 1
         
+        cv2.destroyAllWindows()
         if video_writer is not None:
             video_writer.release()
             print("[DEBUG] Video writer released.")
